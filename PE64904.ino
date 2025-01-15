@@ -38,7 +38,7 @@ void loop()
 // Initialize serial communication
 void initializeSerial()
 {
-    Serial.begin(9600);
+    Serial.begin(115200);
     while (!Serial)
         ; // Wait for the Serial port to be ready
 }
@@ -170,5 +170,26 @@ void printSystemInfo()
     Serial.println("  Data Mode: SPI_MODE0");
     Serial.println("  Bit Order: MSBFIRST");
     Serial.println("Use commands: SET <state>, GET, RESET, START, STOP.");
+    Serial.println();
+
+    Serial.println("Pin Definitions:");
+    Serial.print("  SEN Pin: ");
+    Serial.println(PIN_SEN);
+    Serial.print("  SCL Pin: ");
+    Serial.println(PIN_SCL);
+    Serial.print("  SDA Pin: ");
+    Serial.println(PIN_SDA);
+    Serial.println();
+
+    Serial.println("State Information (Capacitance and Resistance Calculated):");
+    for (uint8_t state = 0; state < 32; state++) {
+        Serial.print("  State ");
+        Serial.print(state);
+        Serial.print(": Capacitance = ");
+        Serial.print(calculateCapacitance(state));
+        Serial.print(" pF, Resistance = ");
+        Serial.print(calculateResistance(state));
+        Serial.println(" Ω");
+    }
     Serial.println("====================================");
 }
